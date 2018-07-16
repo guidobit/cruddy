@@ -1,0 +1,30 @@
+version: "2.3"
+
+# This file lists the differences from the base docker-compose.yml when
+# developing. Use docker-compose config to see how this is interpeted.
+
+services:
+  backend:
+    image: cruddy/bakend:dev
+    build:
+      target: "base"
+    volumes:
+      - ".:/app"
+    command: python3 run.py
+
+  mongo:
+#      logging:
+#        driver: "none"
+    volumes:
+      - /data/db
+    image: cruddy/db:dev
+
+  mongo-express:
+     image: mongo-express:latest
+     ports:
+      - 1337:8081
+     links:
+      - mongo
+     depends_on:
+      mongo:
+        condition: service_healthy

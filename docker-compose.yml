@@ -1,0 +1,37 @@
+version: "2.3"
+
+services:
+  backend:
+    image: cruddy/backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    init: true
+    environment:
+      PYTHONUNBUFFERED: 1
+    healthcheck:
+      test: "curl localhost:8000/v1 -sSf || exit 1"
+      start_period: "5s"
+      timeout: "5s"
+      interval: "10s"
+      retries: 1
+
+  mongo:
+    image: cruddy/db
+    build:
+      context: ./ops
+      dockerfile: ./db/Dockerfile
+    ports:
+      - "27017"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "27017",  "-v"]
+      start_period: "5s"
+      timeout: "1s"
+      interval: "5s"
+      retries: 1
+    init: true
