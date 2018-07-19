@@ -1,0 +1,23 @@
+version: "2.3"
+
+# This file lists the differences from the base docker-compose.yml when
+# testing. Use docker-compose config to see how this is interpreted.
+
+services:
+  backend:
+    image: cruddy/bakend:test
+    build:
+      target: "base"
+    volumes:
+      - ".:/app"
+    environment:
+      DATABASE_URL: "mongodb://mongo:27017"
+    command: python3 run.py
+
+  mongo:
+    logging:
+      driver: "none"
+    volumes:
+      - /data/db
+    image: cruddy/db:test
+

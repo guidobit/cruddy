@@ -27,11 +27,11 @@ async def home(config: Config):
 
 
 @api.route('/<something>', methods=['POST'])
-async def store_something():
+async def store_something(something):
     return JsonResponse(
         content=
         {
-            'obj': {},
+            'obj': {}, # TODO Connect to DataService
             'stored': True
         },
         status_code=CruddyCodes.SUCCESS.value,

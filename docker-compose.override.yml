@@ -1,7 +1,7 @@
 version: "2.3"
 
 # This file lists the differences from the base docker-compose.yml when
-# developing. Use docker-compose config to see how this is interpeted.
+# developing. Use docker-compose config to see how this is interpreted.
 
 services:
   backend:
@@ -13,8 +13,8 @@ services:
     command: python3 run.py
 
   mongo:
-#      logging:
-#        driver: "none"
+    logging:
+      driver: "none"
     volumes:
       - /data/db
     image: cruddy/db:dev

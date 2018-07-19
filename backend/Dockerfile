@@ -13,15 +13,9 @@ RUN apk update && \
 
 WORKDIR /app
 
-EXPOSE 8000
-CMD python run.py
-
-
-FROM base as prod
-COPY ../ /app
-
 COPY requirements.txt /app/requirements.txt
 RUN pip3 install -v -r requirements.txt
 
 EXPOSE 8000
 CMD python run.py
+
